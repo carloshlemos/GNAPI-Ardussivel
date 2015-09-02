@@ -11,9 +11,11 @@ public class GoogleSearchApi {
 	public static final String KEY_QUERY_TEXT = "query_text";
 	public static final String KEY_TEXT_TO_SPEAK = "text_to_speak";
 
-	/* This method allows you to do TTS without implementing your own activity.
+	/*
+	 * This method allows you to do TTS without implementing your own activity.
 	 * Note that this will not work if Google Search is not in the foreground.
-	 * If you're using your own activity, implement a normal TTS with TextToSpeechthey
+	 * If you're using your own activity, implement a normal TTS with
+	 * TextToSpeechthey
 	 */
 	public static void speak(Context context, String text) {
 		Intent intent = new Intent(INTENT_REQUEST_SPEAK);
