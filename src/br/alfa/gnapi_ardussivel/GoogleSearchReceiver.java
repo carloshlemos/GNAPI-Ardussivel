@@ -22,7 +22,7 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
-		
+
 		if (action == null) {
 			return;
 		}
@@ -33,30 +33,63 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 			if (queryText == null) {
 				return;
 			}
-			
+
 			queryText = queryText.toLowerCase();
-			
+
 			if (queryText.contains("lâmpada")) {
 				if (queryText.contains("ligar") && !queryText.startsWith("acender")) {
-					GoogleSearchApi.speak(context, "Acendendo a lâmpada");
-					this.postData(context);
+					GoogleSearchApi.speak(context, "Ok!, Acendendo a lâmpada");
+					this.postData(context, "1");
+					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
+				} else if (queryText.contains("desligar") && !queryText.startsWith("apagar")) {
+					GoogleSearchApi.speak(context, "Ok!, Apagando a lâmpada");
+					this.postData(context, "2");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				}
 			}
 
 			if (queryText.contains("ar condicionado")) {
 				if (queryText.contains("ligar")) {
-					GoogleSearchApi.speak(context, "Ligando o ar condicionado");
+					GoogleSearchApi.speak(context, "Ok!, Ligando o ar condicionado");
+					this.postData(context, "3");
+					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
+				} else if (queryText.contains("desligar")) {
+					GoogleSearchApi.speak(context, "Ok!, Desligando o ar condicionado");
+					this.postData(context, "4");
+					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
+				}
+			}
+			
+			if (queryText.contains("tv")) {
+				if (queryText.contains("ligar")) {
+					GoogleSearchApi.speak(context, "Ok!, Ligando a TV");
+					this.postData(context, "5");
+					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
+				} else if (queryText.contains("desligar")) {
+					GoogleSearchApi.speak(context, "Ok!, Desligando a TV");
+					this.postData(context, "6");
+					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
+				}
+			}
+			
+			if (queryText.contains("portão")) {
+				if (queryText.contains("abrir")) {
+					GoogleSearchApi.speak(context, "Ok!, Abrindo o portão");
+					this.postData(context, "7");
+					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
+				} else if (queryText.contains("fechar")) {
+					GoogleSearchApi.speak(context, "Ok!, Fechando o portão");
+					this.postData(context, "8");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
 	}
 
-	private HttpResponse postData(Context context) {
+	private HttpResponse postData(Context context, String comando) {
 		// Create a new HttpClient and Post Header
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=1");
+		HttpPost httppost = new HttpPost("http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + comando);
 		HttpResponse response = null;
 		try {
 			// Add your data
