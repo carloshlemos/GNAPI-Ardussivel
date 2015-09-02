@@ -16,6 +16,8 @@ import org.apache.http.message.BasicNameValuePair;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.widget.Toast;
 
 public class GoogleSearchReceiver extends BroadcastReceiver {
@@ -98,6 +100,13 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 			nameValuePairs.add(new BasicNameValuePair("utensilio", "lâmpada"));
 			nameValuePairs.add(new BasicNameValuePair("acao", "ligar"));
 			nameValuePairs.add(new BasicNameValuePair("comando", "1"));
+			
+			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+			WifiInfo wInfo = wifiManager.getConnectionInfo();
+			String macAddress = wInfo.getMacAddress();
+			
+			nameValuePairs.add(new BasicNameValuePair("macAddress", macAddress));
+			
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
 			// Execute HTTP Post Request
