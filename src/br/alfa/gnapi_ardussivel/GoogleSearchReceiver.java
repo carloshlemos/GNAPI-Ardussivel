@@ -40,81 +40,83 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 
 			if (queryText.contains("lâmpada")) {
 				if (queryText.contains("ligar") && !queryText.startsWith("acender")) {
-					GoogleSearchApi.speak(context, "Ok!, Acendendo a lâmpada");
-					this.postData(context, "1");
+					this.postData(context, "quarto", "lâmpada", "ligar", "1");
+					GoogleSearchApi.speak(context, "Ok!, Lâmpada acesa");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				} else if (queryText.contains("desligar") && !queryText.startsWith("apagar")) {
-					GoogleSearchApi.speak(context, "Ok!, Apagando a lâmpada");
-					this.postData(context, "2");
+					this.postData(context, "quarto", "lâmpada", "desligar", "2");
+					GoogleSearchApi.speak(context, "Ok!, Lâmpada apagada");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				}
 			}
 
 			if (queryText.contains("ar condicionado")) {
 				if (queryText.contains("ligar")) {
-					GoogleSearchApi.speak(context, "Ok!, Ligando o ar condicionado");
-					this.postData(context, "3");
+					this.postData(context, "quarto", "ar condicionado", "ligar", "3");
+					GoogleSearchApi.speak(context, "Ok!, Ar condicionado ligado");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				} else if (queryText.contains("desligar")) {
-					GoogleSearchApi.speak(context, "Ok!, Desligando o ar condicionado");
-					this.postData(context, "4");
+					this.postData(context, "quarto", "ar condicionado", "desligar", "4");
+					GoogleSearchApi.speak(context, "Ok!, Ar condicionado desligado");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				}
 			}
-			
+
 			if (queryText.contains("tv")) {
 				if (queryText.contains("ligar")) {
-					GoogleSearchApi.speak(context, "Ok!, Ligando a TV");
-					this.postData(context, "5");
+					this.postData(context, "sala", "tv", "ligar", "5");
+					GoogleSearchApi.speak(context, "Ok!, TV ligada");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				} else if (queryText.contains("desligar")) {
-					GoogleSearchApi.speak(context, "Ok!, Desligando a TV");
-					this.postData(context, "6");
+					this.postData(context, "sala", "tv", "desligar", "6");
+					GoogleSearchApi.speak(context, "Ok!, TV desligada");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				}
 			}
-			
+
 			if (queryText.contains("portão")) {
 				if (queryText.contains("abrir")) {
-					GoogleSearchApi.speak(context, "Ok!, Abrindo o portão");
-					this.postData(context, "7");
+					this.postData(context, "entrada", "portao", "abrir", "7");
+					GoogleSearchApi.speak(context, "Ok!, Portão aberto");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				} else if (queryText.contains("fechar")) {
-					GoogleSearchApi.speak(context, "Ok!, Fechando o portão");
-					this.postData(context, "8");
+					GoogleSearchApi.speak(context, "Ok!, Portão fechado");
+					this.postData(context, "entrada", "portao", "fechar", "8");
 					Toast.makeText(context, "Comando recebido!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
 	}
 
-	private HttpResponse postData(Context context, String comando) {
+	private HttpResponse postData(Context context, String ambiente, String utensilio, String acao, String comando) {
 		// Create a new HttpClient and Post Header
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + comando);
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost("http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + comando);
 		HttpResponse response = null;
 		try {
 			// Add your data
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			nameValuePairs.add(new BasicNameValuePair("ambiente", "quarto"));
-			nameValuePairs.add(new BasicNameValuePair("utensilio", "lâmpada"));
-			nameValuePairs.add(new BasicNameValuePair("acao", "ligar"));
-			nameValuePairs.add(new BasicNameValuePair("comando", "1"));
-			
+			nameValuePairs.add(new BasicNameValuePair("ambiente", ambiente));
+			nameValuePairs.add(new BasicNameValuePair("utensilio", utensilio));
+			nameValuePairs.add(new BasicNameValuePair("acao", acao));
+			nameValuePairs.add(new BasicNameValuePair("comando", comando));
+
 			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 			WifiInfo wInfo = wifiManager.getConnectionInfo();
 			String macAddress = wInfo.getMacAddress();
-			
+
 			nameValuePairs.add(new BasicNameValuePair("macAddress", macAddress));
-			
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+
+			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
 
 			// Execute HTTP Post Request
-			response = httpclient.execute(httppost);
+			response = httpClient.execute(httpPost);
 
 		} catch (ClientProtocolException e) {
+			GoogleSearchApi.speak(context, "Ops!, Não consegui realizar a ação, tente novamente.");
 			Toast.makeText(context, "Erro ao Enviar o comando: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 		} catch (IOException e) {
+			GoogleSearchApi.speak(context, "Ops!, Não consegui realizar a ação, tente novamente.");
 			Toast.makeText(context, "Erro ao Enviar o comando: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 		}
 
