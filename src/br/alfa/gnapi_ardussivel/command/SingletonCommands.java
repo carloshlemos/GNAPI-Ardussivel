@@ -16,6 +16,9 @@ public class SingletonCommands {
 
 	public static SingletonCommands getInstance() {
 		if (instance == null) {
+			
+			instance = new SingletonCommands();
+			
 			mapCommands.put("lâmpada ligar", new UtensilioLigarCommand(new Lampada()));
 			mapCommands.put("lâmpada desligar", new UtensilioDesligarCommand(new Lampada()));
 			mapCommands.put("ar condicionado ligar", new UtensilioLigarCommand(new ArCondicionado()));
@@ -24,9 +27,8 @@ public class SingletonCommands {
 			mapCommands.put("televisor desligar", new UtensilioDesligarCommand(new Televisor()));
 			mapCommands.put("portão abrir", new UtensilioLigarCommand(new Televisor()));
 			mapCommands.put("portão fechar", new UtensilioDesligarCommand(new Televisor()));
-
-			instance = new SingletonCommands();
 		}
+
 		return instance;
 	}
 
