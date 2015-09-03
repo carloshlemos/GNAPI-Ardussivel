@@ -1,17 +1,16 @@
 package br.alfa.gnapi_ardussivel;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -92,34 +91,55 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 		// Create a new HttpClient and Post Header
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost("http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + comando);
-		HttpResponse response = null;
+		HttpResponse httpResponse = null;
+		InputStream inputStream = null;
 		try {
-			// Add your data
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-			nameValuePairs.add(new BasicNameValuePair("ambiente", ambiente));
-			nameValuePairs.add(new BasicNameValuePair("utensilio", utensilio));
-			nameValuePairs.add(new BasicNameValuePair("acao", acao));
-			nameValuePairs.add(new BasicNameValuePair("comando", comando));
+			String json = "";
+
+			// build jsonObject
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.accumulate("ambiente", ambiente);
+			jsonObject.accumulate("utensilio", utensilio);
+			jsonObject.accumulate("acao", acao);
+			jsonObject.accumulate("comando", comando);
 
 			WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 			WifiInfo wInfo = wifiManager.getConnectionInfo();
 			String macAddress = wInfo.getMacAddress();
 
-			nameValuePairs.add(new BasicNameValuePair("macAddress", macAddress));
+			jsonObject.accumulate("macAddress", macAddress);
 
-			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+			// convert JSONObject to JSON to String
+			json = jsonObject.toString();
 
-			// Execute HTTP Post Request
-			response = httpClient.execute(httpPost);
+			// ** Alternative way to convert Person object to JSON string using
+			// Jackson Lib
+			// ObjectMapper mapper = new ObjectMapper();
+			// json = mapper.writeValueAsString(person);
 
+			// set json to StringEntity
+			StringEntity se = new StringEntity(json);
+
+			// set httpPost Entity
+			//httpPost.setEntity(se);
+			
+			// Set some headers to inform server about the type of the
+			// content
+			//httpPost.setHeader("Accept", "application/json");
+			httpPost.setHeader("Content-type", "application/json");
+
+			httpResponse = httpClient.execute(httpPost);
 		} catch (ClientProtocolException e) {
 			GoogleSearchApi.speak(context, "Ops!, Não consegui realizar a ação, tente novamente.");
 			Toast.makeText(context, "Erro ao Enviar o comando: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 		} catch (IOException e) {
 			GoogleSearchApi.speak(context, "Ops!, Não consegui realizar a ação, tente novamente.");
 			Toast.makeText(context, "Erro ao Enviar o comando: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+		} catch (JSONException e) {
+			GoogleSearchApi.speak(context, "Ops!, Não consegui realizar a ação, tente novamente.");
+			Toast.makeText(context, "Erro ao Enviar o comando: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 		}
 
-		return response;
+		return httpResponse;
 	}
 }
