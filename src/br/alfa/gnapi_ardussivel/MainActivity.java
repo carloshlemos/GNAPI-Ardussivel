@@ -15,6 +15,7 @@ public class MainActivity extends Activity {
 
 		Toast.makeText(getApplicationContext(), "Plugin instalado",
 				Toast.LENGTH_SHORT).show();
+		
 		getPackageManager().setComponentEnabledSetting(
 				new ComponentName(this, getPackageName()
 						+ ".MainActivity-Alias"),
