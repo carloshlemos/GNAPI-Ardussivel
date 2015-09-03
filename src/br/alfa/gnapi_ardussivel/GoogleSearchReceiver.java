@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import br.alfa.gnapi_ardussivel.command.SingletonCommands;
+import br.alfa.gnapi_ardussivel.util.Command;
 
 public class GoogleSearchReceiver extends BroadcastReceiver {
 	@Override
@@ -23,7 +24,11 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 
 			queryText = queryText.toLowerCase();
 			SingletonCommands commands = SingletonCommands.getInstance();
-			commands.getMapCommands().get(queryText).execute(context);
+			Command command = commands.getMapCommands().get(queryText);
+			if (command != null) {
+				GoogleSearchApi.speak(context, "Ok!");				
+				command.execute(context);
+			}
 		}
 	}
 }
