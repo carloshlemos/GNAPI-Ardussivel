@@ -24,14 +24,14 @@ public class SingletonCommands {
 	
 	public SingletonCommands() {
 		this.mapCommands = new HashMap<String, Command>();
-		mapCommands.put("l‚mpada ligar", new UtensilioLigarCommand(new Lampada()));
-		mapCommands.put("l‚mpada desligar", new UtensilioDesligarCommand(new Lampada()));
+		mapCommands.put("teste android", new UtensilioLigarCommand(new Lampada()));
+		mapCommands.put("l√¢mpada desligar", new UtensilioDesligarCommand(new Lampada()));
 		mapCommands.put("ar condicionado ligar", new UtensilioLigarCommand(new ArCondicionado()));
 		mapCommands.put("ar condicionado desligar", new UtensilioDesligarCommand(new ArCondicionado()));
 		mapCommands.put("televisor ligar", new UtensilioLigarCommand(new Televisor()));
 		mapCommands.put("televisor desligar", new UtensilioDesligarCommand(new Televisor()));
-		mapCommands.put("port„o abrir", new UtensilioLigarCommand(new Portao()));
-		mapCommands.put("port„o fechar", new UtensilioDesligarCommand(new Portao()));
+		mapCommands.put("port√£o abrir", new UtensilioLigarCommand(new Portao()));
+		mapCommands.put("port√£o fechar", new UtensilioDesligarCommand(new Portao()));
 	}
 
 	public Map<String, Command> getMapCommands() {

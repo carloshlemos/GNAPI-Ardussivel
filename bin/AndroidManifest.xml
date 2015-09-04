@@ -5,6 +5,7 @@
     android:versionName="1.1" >
 
     <uses-permission android:name="com.mohammadag.googlesearchapi.permission.ACCESS_GGOGLE_SEARCH_API" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -26,6 +27,7 @@
             android:targetActivity="br.alfa.gnapi_ardussivel.MainActivity" >
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity-alias>
