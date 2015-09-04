@@ -41,10 +41,16 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 
 			queryText = queryText.toLowerCase();
 
-			if (queryText.contains("teste")) {
-				if (queryText.contains("android")) {
+			if (queryText.contains("lâmpada")) {
+				if (queryText.contains("ligar")) {
 					this.context = context;
-					new MyAsyncTask().execute();
+					new MyAsyncTask().execute("1");
+					Toast.makeText(context, "Funcionou!!!!", Toast.LENGTH_SHORT).show();
+				}
+				
+				if (queryText.contains("desligar")) {
+					this.context = context;
+					new MyAsyncTask().execute("2");
 					Toast.makeText(context, "Funcionou!!!!", Toast.LENGTH_SHORT).show();
 				}
 			}
@@ -52,25 +58,11 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 	}
 
 	private class MyAsyncTask extends AsyncTask<String, Integer, String> {
-
 		@Override
 		protected String doInBackground(String... params) {
-			postData();
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			Toast.makeText(context, "Comando Executado!", Toast.LENGTH_LONG).show();
-		}
-
-		protected void onProgressUpdate(Integer... progress) {
-		}
-
-		public void postData() {
-			// Create a new HttpClient and Post Header
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost("http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=1");
+			HttpPost httpPost = new HttpPost("http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + params[0]);
+			String resposta = null;
 
 			try {
 				// Add your data
@@ -81,13 +73,20 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 				// Execute HTTP Post Request
 				httpPost.setHeader("Content-type", "application/json");
 				HttpResponse response = httpclient.execute(httpPost);
-				final String responseStr = EntityUtils.toString(response.getEntity());
-				Log.v("MainActivity", responseStr);
+				resposta = EntityUtils.toString(response.getEntity());
+				Log.v("MainActivity", resposta);
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
+			return resposta;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			Toast.makeText(context, "Comando Executado, Resultado: " + result, Toast.LENGTH_LONG).show();
 		}
 	}
 
