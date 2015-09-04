@@ -3,6 +3,7 @@ package br.alfa.gnapi_ardussivel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,11 +19,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
 
 public class GoogleSearchReceiver extends BroadcastReceiver {
 	private Context context;
+	private TextToSpeech tts;
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -38,20 +41,27 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 			if (queryText == null) {
 				return;
 			}
+			
+			this.context = context;
+			
+			tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+				@Override
+				public void onInit(int status) {
+					if (status != TextToSpeech.ERROR) {
+						tts.setLanguage(Locale.US);
+					}
+				}
+			});
 
 			queryText = queryText.toLowerCase();
 
 			if (queryText.contains("lâmpada")) {
 				if (queryText.contains("ligar")) {
-					this.context = context;
 					new MyAsyncTask().execute("1");
-					Toast.makeText(context, "Funcionou!!!!", Toast.LENGTH_SHORT).show();
 				}
 				
 				if (queryText.contains("desligar")) {
-					this.context = context;
 					new MyAsyncTask().execute("2");
-					Toast.makeText(context, "Funcionou!!!!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
@@ -86,6 +96,7 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 
 		@Override
 		protected void onPostExecute(String result) {
+			tts.speak("Ok!!!.", TextToSpeech.QUEUE_ADD, null);
 			Toast.makeText(context, "Comando Executado, Resultado: " + result, Toast.LENGTH_LONG).show();
 		}
 	}
