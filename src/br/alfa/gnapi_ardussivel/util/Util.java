@@ -17,7 +17,7 @@ public class Util {
 	public HttpResponse postData(Context context, String ambiente, String utensilio, String acao, String comando) {
 		// Create a new HttpClient and Post Header
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost("http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + comando);
+		HttpPost httpPost = new HttpPost("http://10.6.156.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + comando);
 		HttpResponse httpResponse = null;
 		try {
 //			String json = "";
