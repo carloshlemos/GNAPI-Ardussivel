@@ -11,10 +11,17 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 import android.widget.Toast;
 import br.alfa.gnapi_ardussivel.GoogleSearchApi;
+import br.alfa.gnapi_ardussivel.command.MyAsyncTask;
 
 public class Util {
-
+	
+	public void postData(Context context, String comando) {
+		new MyAsyncTask(context).execute(comando);
+	}
+	
 	public HttpResponse postData(Context context, String ambiente, String utensilio, String acao, String comando) {
+		new MyAsyncTask(context).execute(comando);
+		
 		// Create a new HttpClient and Post Header
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost("http://10.6.156.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + comando);

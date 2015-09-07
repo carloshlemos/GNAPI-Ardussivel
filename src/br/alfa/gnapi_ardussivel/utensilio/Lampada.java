@@ -8,15 +8,13 @@ public class Lampada extends Utensilio {
 	
 	@Override
 	public void ligar(Context context) {
-		this.util.postData(context, "quarto", "lâmpada", "ligar", "1");
-		GoogleSearchApi.speak(context, "Ok!, Lâmpada acesa");
+		this.util.postData(context, "1");
 		super.ligar(context);
 	}
 	
 	@Override
 	public void desligar(Context context) {
-		this.util.postData(context, "quarto", "lâmpada", "desligar", "2");
-		GoogleSearchApi.speak(context, "Ok!, Lâmpada apagada");
+		this.util.postData(context, "2");
 		super.desligar(context);
 	}
 }

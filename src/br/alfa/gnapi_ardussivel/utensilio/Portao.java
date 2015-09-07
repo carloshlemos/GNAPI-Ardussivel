@@ -7,15 +7,15 @@ public class Portao extends Utensilio {
 
 	@Override
 	public void ligar(Context context) {
-		this.util.postData(context, "entrada", "portao", "abrir", "7");
-		GoogleSearchApi.speak(context, "Ok!, Port„o aberto");
+		this.util.postData(context, "7");
+		GoogleSearchApi.speak(context, "Ok!, Port√£o aberto");
 		super.ligar(context);
 	}
 
 	@Override
 	public void desligar(Context context) {
-		this.util.postData(context, "entrada", "portao", "fechar", "8");
-		GoogleSearchApi.speak(context, "Ok!, Port„o fechado");
+		this.util.postData(context, "8");
+		GoogleSearchApi.speak(context, "Ok!, Port√£o fechado");
 		super.desligar(context);
 	}
 
