@@ -1,7 +1,6 @@
 package br.alfa.gnapi_ardussivel.utensilio;
 
 import android.content.Context;
-import br.alfa.gnapi_ardussivel.GoogleSearchApi;
 
 
 public class Lampada extends Utensilio {

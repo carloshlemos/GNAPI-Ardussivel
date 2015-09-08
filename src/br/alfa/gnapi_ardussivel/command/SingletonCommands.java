@@ -13,7 +13,7 @@ public class SingletonCommands {
 
 	private static SingletonCommands instance;
 
-	public Map<String, Command> mapCommands;
+	private Map<String, Command> mapCommands;
 
 	public static SingletonCommands getInstance() {
 		if (instance == null) {
