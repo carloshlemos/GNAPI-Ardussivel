@@ -24,7 +24,7 @@ public class SingletonCommands {
 	
 	public SingletonCommands() {
 		this.mapCommands = new HashMap<String, Command>();
-		mapCommands.put("teste android", new UtensilioLigarCommand(new Lampada()));
+		mapCommands.put("lâmpada ligar", new UtensilioLigarCommand(new Lampada()));
 		mapCommands.put("lâmpada desligar", new UtensilioDesligarCommand(new Lampada()));
 		mapCommands.put("ar condicionado ligar", new UtensilioLigarCommand(new ArCondicionado()));
 		mapCommands.put("ar condicionado desligar", new UtensilioDesligarCommand(new ArCondicionado()));
