@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 
 /**
  * Created by Ryan on 7/23/2014.
@@ -43,6 +44,20 @@ public class GoogleNowUtil {
 			public boolean handleMessage(Message message) {
 				try {
 					MyAccessibilityService.getInstance().performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+				} catch (Exception e) {
+				}
+				return true;
+			}
+		});
+		handler.sendEmptyMessageDelayed(0, 1000);
+	}
+	
+	public static void returnHome() {
+		Handler handler = new Handler(new Handler.Callback() {
+			@Override
+			public boolean handleMessage(Message message) {
+				try {
+					MyAccessibilityService.getInstance().performGlobalAction(KeyEvent.KEYCODE_HOME);
 				} catch (Exception e) {
 				}
 				return true;

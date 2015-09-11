@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import br.alfa.gnapi_ardussivel.command.SingletonCommands;
+import br.alfa.gnapi_ardussivel.util.Command;
 import br.alfa.gnapi_ardussivel.util.GoogleNowUtil;
 
 public class GoogleSearchReceiver extends BroadcastReceiver {
@@ -21,13 +22,18 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 			if (queryText == null) {
 				return;
 			}
-			
+
 			GoogleNowUtil.resetGoogleNowOnly(context);
 
 			queryText = queryText.toLowerCase();
 			SingletonCommands commands = SingletonCommands.getInstance();
-			commands.getMapCommands().get(queryText).execute(context);
-			GoogleNowUtil.resetGoogleNow(context);
+			Command command = commands.getMapCommands().get(queryText);
+			if (command != null) {
+				command.execute(context);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			} else {
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			}
 		}
 	}
 }
