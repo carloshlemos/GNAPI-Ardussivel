@@ -21,7 +21,7 @@ public class SingletonCommands {
 		}
 		return instance;
 	}
-	
+
 	public SingletonCommands() {
 		this.mapCommands = new HashMap<String, Command>();
 		mapCommands.put("lâmpada ligar", new UtensilioLigarCommand(new Lampada()));
