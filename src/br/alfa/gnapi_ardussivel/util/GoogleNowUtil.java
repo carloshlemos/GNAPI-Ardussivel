@@ -35,7 +35,6 @@ public class GoogleNowUtil {
 		if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("closegoogle", true)) {
 			returnPreviousApp();
 		}
-
 	}
 
 	public static void returnPreviousApp() {
@@ -49,7 +48,7 @@ public class GoogleNowUtil {
 				return true;
 			}
 		});
-		handler.sendEmptyMessageDelayed(0, 1000);
+		handler.sendEmptyMessageDelayed(0, 500);
 	}
 	
 	public static void returnHome() {
@@ -63,7 +62,7 @@ public class GoogleNowUtil {
 				return true;
 			}
 		});
-		handler.sendEmptyMessageDelayed(0, 1000);
+		handler.sendEmptyMessageDelayed(0, 500);
 	}
 
 }

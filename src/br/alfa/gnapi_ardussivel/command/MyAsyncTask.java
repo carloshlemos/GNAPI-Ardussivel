@@ -27,6 +27,8 @@ public class MyAsyncTask extends AsyncTask<String, Integer, String> {
 
 	public MyAsyncTask(Context context) {
 		this.context = context;
+		ttsManager = new TTSManager();
+		ttsManager.init(context);
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public class MyAsyncTask extends AsyncTask<String, Integer, String> {
 			httpPost.setHeader("Content-type", "application/json");
 			HttpResponse response = httpclient.execute(httpPost);
 			resposta = EntityUtils.toString(response.getEntity());
-			Log.v("MainActivity", resposta);
+			Log.v("MyAsyncTask", resposta);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -57,9 +59,8 @@ public class MyAsyncTask extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
-		ttsManager = new TTSManager();
-		ttsManager.init(context);
 		ttsManager.initQueue(result);
 		Toast.makeText(context, "Resultado: " + result, Toast.LENGTH_LONG).show();
+		ttsManager.shutDown();
 	}
 }

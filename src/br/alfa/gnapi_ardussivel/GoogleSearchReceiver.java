@@ -1,5 +1,7 @@
 package br.alfa.gnapi_ardussivel;
 
+import java.util.Locale;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,13 +25,15 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 				return;
 			}
 
+			queryText = queryText.toLowerCase(new Locale("pt", "br"));
+
 			SingletonCommands commands = SingletonCommands.getInstance();
 			Command command = commands.getMapCommands().get(queryText);
 			if (command != null) {
 				command.execute(context);
-				GoogleNowUtil.resetGoogleNowOnly(context);
+				GoogleNowUtil.resetGoogleNow(context);
 			} else {
-				GoogleNowUtil.resetGoogleNowOnly(context);
+				GoogleNowUtil.resetGoogleNow(context);
 			}
 		}
 	}
