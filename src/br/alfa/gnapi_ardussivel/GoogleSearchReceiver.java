@@ -23,7 +23,6 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 				return;
 			}
 
-			queryText = queryText.toLowerCase();
 			SingletonCommands commands = SingletonCommands.getInstance();
 			Command command = commands.getMapCommands().get(queryText);
 			if (command != null) {

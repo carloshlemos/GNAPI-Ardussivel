@@ -18,55 +18,48 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+import br.alfa.gnapi_ardussivel.util.TTSManager;
 
-	public class MyAsyncTask extends AsyncTask<String, Integer, String> {
-		
-		private Context context;
-		
-		public MyAsyncTask(Context context) {
-			this.context = context;
-		}
-		
-		@Override
-		protected String doInBackground(String... params) {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httpPost = new HttpPost(
-					"http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + params[0]);
-			String resposta = null;
+public class MyAsyncTask extends AsyncTask<String, Integer, String> {
 
-			try {
-				// Add your data
-				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("ambiente", "quarto"));
-				httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	private Context context;
+	private TTSManager ttsManager;
 
-				// Execute HTTP Post Request
-				httpPost.setHeader("Content-type", "application/json");
-				HttpResponse response = httpclient.execute(httpPost);
-				resposta = EntityUtils.toString(response.getEntity());
-				Log.v("MainActivity", resposta);
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			return resposta;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			// tts = new TextToSpeech(context, new TextToSpeech.OnInitListener()
-			// {
-			// @Override
-			// public void onInit(int status) {
-			// if (status != TextToSpeech.ERROR) {
-			// tts.setLanguage(Locale.US);
-			// }
-			// }
-			// });
-			// tts.speak("Ok!!!.", TextToSpeech.QUEUE_ADD, null);
-			Toast.makeText(context, "Comando Executado, Resultado: " + result, Toast.LENGTH_LONG).show();
-		}
+	public MyAsyncTask(Context context) {
+		this.context = context;
 	}
 
+	@Override
+	protected String doInBackground(String... params) {
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost("http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + params[0]);
+		String resposta = null;
+
+		try {
+			// Add your data
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("ambiente", "quarto"));
+			httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+			// Execute HTTP Post Request
+			httpPost.setHeader("Content-type", "application/json");
+			HttpResponse response = httpclient.execute(httpPost);
+			resposta = EntityUtils.toString(response.getEntity());
+			Log.v("MainActivity", resposta);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return resposta;
+	}
+
+	@Override
+	protected void onPostExecute(String result) {
+		ttsManager = new TTSManager();
+		ttsManager.init(context);
+		ttsManager.initQueue(result);
+		Toast.makeText(context, "Resultado: " + result, Toast.LENGTH_LONG).show();
+	}
+}
