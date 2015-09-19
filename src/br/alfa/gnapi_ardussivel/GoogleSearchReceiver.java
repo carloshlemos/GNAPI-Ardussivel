@@ -32,6 +32,7 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 			if (command != null) {
 				command.execute(context);
 				GoogleNowUtil.resetGoogleNow(context);
+
 			} else {
 				GoogleNowUtil.resetGoogleNow(context);
 			}
