@@ -3,7 +3,6 @@ package br.alfa.gnapi_ardussivel.command;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -17,17 +16,14 @@ import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.widget.Toast;
-import br.alfa.gnapi_ardussivel.util.TTSManager;
 
-public class MyAsyncTask extends AsyncTask<String, Integer, String> {
+public class CommandAsyncTask extends AsyncTask<String, Integer, String> {
 
 	private Context context;
-	private TTSManager ttsManager;
 
-	public MyAsyncTask(Context context) {
+	public CommandAsyncTask(Context context) {
 		this.context = context;
 	}
 
@@ -35,7 +31,7 @@ public class MyAsyncTask extends AsyncTask<String, Integer, String> {
 	protected String doInBackground(String... params) {
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(
-				"http://172.62.10.107:8080/restArduino/rest/arduino/enviarComando/?comando=" + params[0]);
+				"http://192.168.1.103:8080/restArduino/rest/arduino/enviarComando/?comando=" + params[0]);
 		String resposta = null;
 
 		try {
@@ -60,6 +56,6 @@ public class MyAsyncTask extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
-		Toast.makeText(context, "Resultado: " + result, Toast.LENGTH_LONG).show();
+		new TTSAsyncTask(context).execute(result);
 	}
 }

@@ -13,14 +13,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Toast.makeText(getApplicationContext(), "Plugin instalado",
-				Toast.LENGTH_SHORT).show();
-		
+		Toast.makeText(getApplicationContext(), "Plugin instalado", Toast.LENGTH_SHORT).show();
+
 		getPackageManager().setComponentEnabledSetting(
-				new ComponentName(this, getPackageName()
-						+ ".MainActivity-Alias"),
-				PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-				PackageManager.DONT_KILL_APP);
+				new ComponentName(this, getPackageName() + ".MainActivity-Alias"),
+				PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
 		finish();
 	}
 }
