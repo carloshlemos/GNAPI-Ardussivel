@@ -1,15 +1,24 @@
 package br.alfa.gnapi_ardussivel;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import br.alfa.gnapi_ardussivel.command.SingletonCommands;
-import br.alfa.gnapi_ardussivel.util.Command;
-import br.alfa.gnapi_ardussivel.util.GoogleNowUtil;
+import android.database.SQLException;
+import android.util.Log;
+import br.alfa.gnapi_ardussivel.command.CommandAsyncTask;
+import br.alfa.gnapi_ardussivel.persistence.ComandoDataSource;
+import br.alfa.gnapi_ardussivel.utensilio.Comando;
 
 public class GoogleSearchReceiver extends BroadcastReceiver {
+
+	private Map<String, Comando> mapComandos;
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
@@ -26,15 +35,34 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 			}
 
 			queryText = queryText.toLowerCase(new Locale("pt", "br"));
+			ComandoDataSource datasource = MainActivity.getDatasource();
+			
+			try {
+				datasource.open();
+				List<Comando> comandos = datasource.listarTodos();
+				Log.w(GoogleSearchReceiver.class.getName(),
+						"################### COMANDOS GNAPI ##################" + comandos.size());
+				this.mapComandos = new HashMap<String, Comando>();
 
-			SingletonCommands commands = SingletonCommands.getInstance();
-			Command command = commands.getMapCommands().get(queryText);
-			if (command != null) {
-				command.execute(context);
-				GoogleNowUtil.resetGoogleNow(context);
+				for (Comando comando : comandos) {
+					this.mapComandos.put(comando.getComando(), comando);
+				}
 
-			} else {
-				GoogleNowUtil.resetGoogleNow(context);
+				Comando comando = this.mapComandos.get(queryText);
+
+				if (comando != null) {
+					new CommandAsyncTask(context).execute(comando.getUrl());
+					//GoogleNowUtil.resetGoogleNow(context);
+				} else {
+					//GoogleNowUtil.resetGoogleNow(context);
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 	}
