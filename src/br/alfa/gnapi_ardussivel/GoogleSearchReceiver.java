@@ -36,27 +36,29 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 
 			queryText = queryText.toLowerCase(new Locale("pt", "br"));
 			ComandoDataSource datasource = MainActivity.getDatasource();
-			
+
 			try {
 				datasource.open();
 				List<Comando> comandos = datasource.listarTodos();
-				Log.w(GoogleSearchReceiver.class.getName(),
-						"################### COMANDOS GNAPI ##################" + comandos.size());
-				this.mapComandos = new HashMap<String, Comando>();
 
-				for (Comando comando : comandos) {
-					this.mapComandos.put(comando.getComando(), comando);
+				if (comandos != null && comandos.size() > 0) {
+					Log.w(GoogleSearchReceiver.class.getName(),
+							"################### COMANDOS GNAPI ##################" + comandos.size());
+					this.mapComandos = new HashMap<String, Comando>();
+
+					for (Comando comando : comandos) {
+						this.mapComandos.put(comando.getComando(), comando);
+					}
+
+					Comando comando = this.mapComandos.get(queryText);
+
+					if (comando != null) {
+						new CommandAsyncTask(context).execute(comando.getUrl());
+						// GoogleNowUtil.resetGoogleNow(context);
+					} else {
+						// GoogleNowUtil.resetGoogleNow(context);
+					}
 				}
-
-				Comando comando = this.mapComandos.get(queryText);
-
-				if (comando != null) {
-					new CommandAsyncTask(context).execute(comando.getUrl());
-					//GoogleNowUtil.resetGoogleNow(context);
-				} else {
-					//GoogleNowUtil.resetGoogleNow(context);
-				}
-
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

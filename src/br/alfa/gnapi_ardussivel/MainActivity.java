@@ -1,8 +1,11 @@
 package br.alfa.gnapi_ardussivel;
 
+import java.io.IOException;
+
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.widget.Toast;
 import br.alfa.gnapi_ardussivel.persistence.ComandoDataSource;
@@ -15,6 +18,18 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		MainActivity.datasource = new ComandoDataSource(this);
+		try {
+			MainActivity.datasource.open();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		setContentView(R.layout.activity_main);
 
