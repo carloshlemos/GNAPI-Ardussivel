@@ -1,7 +1,5 @@
 package br.alfa.gnapi_ardussivel;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
@@ -17,17 +15,11 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MainActivity.datasource = new ComandoDataSource(this);
 		try {
-			MainActivity.datasource.open();
+			// Context otherCtx = this.createPackageContext("br.alfa",
+			// Context.CONTEXT_IGNORE_SECURITY);
+			MainActivity.datasource = new ComandoDataSource(this);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
