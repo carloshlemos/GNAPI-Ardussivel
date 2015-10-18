@@ -39,7 +39,6 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 
 			try {
 				if (datasource != null) {
-					datasource.open();
 					List<Comando> comandos = datasource.listarTodos();
 
 					if (comandos != null && comandos.size() > 0) {
@@ -65,10 +64,6 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 							"################### COMANDOS GNAPI - SEM CONEXÃO ##################");
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
