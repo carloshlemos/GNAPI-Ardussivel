@@ -1,6 +1,5 @@
 package br.alfa.gnapi_ardussivel;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -38,32 +37,32 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 			ComandoDataSource datasource = MainActivity.getDatasource();
 
 			try {
-				datasource.open();
-				List<Comando> comandos = datasource.listarTodos();
+				if (datasource != null) {
+					List<Comando> comandos = datasource.listarTodos();
 
-				if (comandos != null && comandos.size() > 0) {
+					if (comandos != null && comandos.size() > 0) {
+						Log.w(GoogleSearchReceiver.class.getName(),
+								"################### COMANDOS GNAPI ##################" + comandos.size());
+						this.mapComandos = new HashMap<String, Comando>();
+
+						for (Comando comando : comandos) {
+							this.mapComandos.put(comando.getComando(), comando);
+						}
+
+						Comando comando = this.mapComandos.get(queryText);
+
+						if (comando != null) {
+							new CommandAsyncTask(context).execute(comando.getUrl());
+							// GoogleNowUtil.resetGoogleNow(context);
+						} else {
+							// GoogleNowUtil.resetGoogleNow(context);
+						}
+					}
+				}else {
 					Log.w(GoogleSearchReceiver.class.getName(),
-							"################### COMANDOS GNAPI ##################" + comandos.size());
-					this.mapComandos = new HashMap<String, Comando>();
-
-					for (Comando comando : comandos) {
-						this.mapComandos.put(comando.getComando(), comando);
-					}
-
-					Comando comando = this.mapComandos.get(queryText);
-
-					if (comando != null) {
-						new CommandAsyncTask(context).execute(comando.getUrl());
-						// GoogleNowUtil.resetGoogleNow(context);
-					} else {
-						// GoogleNowUtil.resetGoogleNow(context);
-					}
+							"################### COMANDOS GNAPI - SEM CONEXÃO ##################");
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}

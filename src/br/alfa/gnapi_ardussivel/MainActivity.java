@@ -47,6 +47,9 @@ public class MainActivity extends Activity {
 		MainActivity.datasource = new ComandoDataSource(this);
 
 		try {
+			// Context otherCtx = this.createPackageContext("br.alfa",
+			// Context.CONTEXT_IGNORE_SECURITY);
+			MainActivity.datasource = new ComandoDataSource(this);
 			MainActivity.datasource.open();
 
 			listaComandos = MainActivity.datasource.listarTodos();
