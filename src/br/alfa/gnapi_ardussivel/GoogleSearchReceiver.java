@@ -1,6 +1,5 @@
 package br.alfa.gnapi_ardussivel;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
