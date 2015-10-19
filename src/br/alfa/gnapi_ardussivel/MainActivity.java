@@ -15,8 +15,8 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
 import br.alfa.gnapi_ardussivel.domain.Comando;
-import br.alfa.gnapi_ardussivel.domain.ExpandableListAdapter;
 import br.alfa.gnapi_ardussivel.persistence.ComandoDataSource;
+import br.alfa.gnapi_ardussivel.persistence.ExpandableListAdapter;
 
 public class MainActivity extends Activity {
 

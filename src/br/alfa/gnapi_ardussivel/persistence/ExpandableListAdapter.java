@@ -1,4 +1,4 @@
-package br.alfa.gnapi_ardussivel.domain;
+package br.alfa.gnapi_ardussivel.persistence;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import br.alfa.gnapi_ardussivel.R;
+import br.alfa.gnapi_ardussivel.domain.Comando;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
