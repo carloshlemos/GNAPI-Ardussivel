@@ -2,8 +2,6 @@
 <resources>
 
     <string name="app_name">GNAPI-Ardussivel</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="command_received">"Comando recebido!"</string>
+    <string name="lista_comandos">Lista de Comandos</string>
 
 </resources>

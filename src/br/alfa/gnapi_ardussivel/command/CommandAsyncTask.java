@@ -17,6 +17,7 @@ import org.apache.http.util.EntityUtils;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class CommandAsyncTask extends AsyncTask<String, Integer, String> {
 
@@ -47,9 +48,9 @@ public class CommandAsyncTask extends AsyncTask<String, Integer, String> {
 				resposta = EntityUtils.toString(response.getEntity());
 				Log.v("MyAsyncTask", resposta);
 			} catch (ClientProtocolException e) {
-				e.printStackTrace();
+				Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 			}
 		}
 		return resposta;
@@ -57,6 +58,7 @@ public class CommandAsyncTask extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
-		new TTSAsyncTask(context).execute(result);
+		Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+		// new TTSAsyncTask(context).execute(result);
 	}
 }

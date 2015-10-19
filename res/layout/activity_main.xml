@@ -9,8 +9,26 @@
     tools:context="br.alfa.gnapi_ardussivel.MainActivity" >
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/lista_comandos" />
 
+<!--     <ListView -->
+<!--         android:id="@+id/listViewComandos" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_below="@+id/textView1" -->
+<!--         android:layout_marginTop="40dp" -->
+<!--         android:divider="#FFECECEC" -->
+<!--         android:dividerHeight="2sp" -->
+<!--         android:headerDividersEnabled="true" > -->
+<!--     </ListView> -->
+
+    <ExpandableListView
+        android:id="@+id/expandViewComandos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"/>
+ 
 </RelativeLayout>

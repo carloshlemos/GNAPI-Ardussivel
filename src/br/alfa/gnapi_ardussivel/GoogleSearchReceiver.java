@@ -12,8 +12,8 @@ import android.content.Intent;
 import android.database.SQLException;
 import android.util.Log;
 import br.alfa.gnapi_ardussivel.command.CommandAsyncTask;
+import br.alfa.gnapi_ardussivel.domain.Comando;
 import br.alfa.gnapi_ardussivel.persistence.ComandoDataSource;
-import br.alfa.gnapi_ardussivel.utensilio.Comando;
 
 public class GoogleSearchReceiver extends BroadcastReceiver {
 

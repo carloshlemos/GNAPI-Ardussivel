@@ -8,7 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import br.alfa.gnapi_ardussivel.utensilio.Comando;
+import br.alfa.gnapi_ardussivel.domain.Comando;
 
 public class ComandoDataSource {
 
