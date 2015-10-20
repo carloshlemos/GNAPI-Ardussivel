@@ -49,7 +49,6 @@ public class ComandoDataSource {
 
 	private Comando cursorToComando(Cursor cursor) {
 		Comando comando = new Comando();
-		comando.setId(cursor.getString(0));
 		comando.setAmbiente(cursor.getString(1));
 		comando.setUtensilio(cursor.getString(2));
 		comando.setAcao(cursor.getString(3));

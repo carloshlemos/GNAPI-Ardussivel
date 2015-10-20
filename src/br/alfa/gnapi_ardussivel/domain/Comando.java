@@ -1,20 +1,26 @@
 package br.alfa.gnapi_ardussivel.domain;
 
-public class Comando {
+import com.orm.SugarRecord;
 
-	private String id;
+public class Comando extends SugarRecord<Comando> {
+
 	private String ambiente;
 	private String utensilio;
 	private String acao;
 	private String comando;
 	private String url;
 
-	public String getId() {
-		return id;
+	public Comando() {
+
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public Comando(String ambiente, String utensilio, String acao, String comando, String url) {
+		super();
+		this.ambiente = ambiente;
+		this.utensilio = utensilio;
+		this.acao = acao;
+		this.comando = comando;
+		this.url = url;
 	}
 
 	public String getAmbiente() {

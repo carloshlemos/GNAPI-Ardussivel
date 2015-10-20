@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.Toast;
+import br.alfa.gnapi_ardussivel.command.CommandAsyncTask;
 import br.alfa.gnapi_ardussivel.domain.Comando;
 import br.alfa.gnapi_ardussivel.persistence.ComandoDataSource;
 import br.alfa.gnapi_ardussivel.persistence.ExpandableListAdapter;
@@ -44,15 +45,12 @@ public class MainActivity extends Activity {
 	}
 
 	private void montaListaComandos() {
-		MainActivity.datasource = new ComandoDataSource(this);
-
 		try {
-			// Context otherCtx = this.createPackageContext("br.alfa",
-			// Context.CONTEXT_IGNORE_SECURITY);
-			MainActivity.datasource = new ComandoDataSource(this);
-			MainActivity.datasource.open();
-
-			listaComandos = MainActivity.datasource.listarTodos();
+//			MainActivity.datasource = new ComandoDataSource(this);
+//			MainActivity.datasource.open();
+//
+//			listaComandos = MainActivity.datasource.listarTodos();
+			listaComandos = Comando.listAll(Comando.class);
 
 			expandViewComandos = (ExpandableListView) findViewById(R.id.expandViewComandos);
 
@@ -61,9 +59,14 @@ public class MainActivity extends Activity {
 				@Override
 				public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition,
 						long id) {
+
+					Comando comando = listDataChild.get(new ArrayList<String>(listDataHeader).get(groupPosition))
+							.get(childPosition);
+					new CommandAsyncTask(getApplicationContext()).execute(comando.getUrl());
+
 					Toast.makeText(getApplicationContext(),
-							new ArrayList<String>(listDataHeader).get(groupPosition) + " : "
-									+ listDataChild.get(new ArrayList<String>(listDataHeader).get(groupPosition)).get(childPosition),
+							new ArrayList<String>(listDataHeader).get(groupPosition) + " : " + listDataChild
+									.get(new ArrayList<String>(listDataHeader).get(groupPosition)).get(childPosition),
 							Toast.LENGTH_SHORT).show();
 					return false;
 				}
@@ -75,10 +78,6 @@ public class MainActivity extends Activity {
 			expandViewComandos.setAdapter(listAdapter);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
