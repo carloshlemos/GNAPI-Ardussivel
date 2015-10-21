@@ -7,7 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import android.app.Activity;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
+
 import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +23,7 @@ import br.alfa.gnapi_ardussivel.domain.Comando;
 import br.alfa.gnapi_ardussivel.persistence.ComandoDataSource;
 import br.alfa.gnapi_ardussivel.persistence.ExpandableListAdapter;
 
-public class MainActivity extends Activity {
+public class MainActivity extends SherlockActivity {
 
 	private static ComandoDataSource datasource;
 	private List<Comando> listaComandos;
@@ -46,10 +50,10 @@ public class MainActivity extends Activity {
 
 	private void montaListaComandos() {
 		try {
-//			MainActivity.datasource = new ComandoDataSource(this);
-//			MainActivity.datasource.open();
-//
-//			listaComandos = MainActivity.datasource.listarTodos();
+			MainActivity.datasource = new ComandoDataSource(this);
+			MainActivity.datasource.open();
+
+			listaComandos = MainActivity.datasource.listarTodos();
 			listaComandos = Comando.listAll(Comando.class);
 
 			expandViewComandos = (ExpandableListView) findViewById(R.id.expandViewComandos);
@@ -79,6 +83,10 @@ public class MainActivity extends Activity {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -106,5 +114,39 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+ 
+		// First Menu Button
+		menu.add("Novo Comando")
+				.setIcon(R.drawable.abs__ic_commit_search_api_holo_dark) // Set the menu icon
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+ 
+		// Second Menu Button
+		menu.add("Excluir Comando")
+				.setIcon(R.drawable.abs__ab_bottom_solid_dark_holo) // Set the menu icon
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+ 
+		// Third Menu Button
+		menu.add("Sair")
+				.setOnMenuItemClickListener(ExitButtonClickListener)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+ 
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	// Capture third menu button click
+		OnMenuItemClickListener ExitButtonClickListener = new OnMenuItemClickListener() {
+	 
+			public boolean onMenuItemClick(MenuItem item) {
+				// Create a simple toast message
+				Toast.makeText(MainActivity.this, "Botão Sair", Toast.LENGTH_SHORT)
+						.show();
+	 
+				// Do something else
+				return false;
+			}
+		};
 
 }
