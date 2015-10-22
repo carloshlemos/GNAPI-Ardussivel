@@ -15,10 +15,8 @@
         android:id="@+id/txtAmbiente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
+        android:ems="10"
+        android:hint="Informe o ambiente..." />
 
     <TextView
         android:id="@+id/lblUtensilio"
@@ -31,7 +29,8 @@
         android:id="@+id/txtUtensilio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" />
+        android:ems="10"
+        android:hint="Informe o utensílio..." />
 
     <TextView
         android:id="@+id/lblAcao"
@@ -44,7 +43,8 @@
         android:id="@+id/txtAcao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" />
+        android:ems="10"
+        android:hint="Informe a ação, exemplo: ligar..." />
 
     <TextView
         android:id="@+id/lblComandoVoz"
@@ -58,7 +58,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Entre com o comando de voz" />    
+        android:hint="Digite o ou Diga o comando..." />    
     
     <TextView
         android:id="@+id/lblURL"
@@ -73,6 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.33"
         android:ems="10"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:hint="Informe a URL do serviço" />
 
 </LinearLayout>
