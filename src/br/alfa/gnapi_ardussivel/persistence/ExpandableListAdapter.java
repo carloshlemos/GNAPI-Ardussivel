@@ -18,7 +18,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	private Context context;
 	private List<String> listDataHeader;
 	private HashMap<String, List<Comando>> listDataChild;
-
+	
 	public ExpandableListAdapter(Context context, List<String> listDataHeader,
 			HashMap<String, List<Comando>> listChildData) {
 		this.context = context;
@@ -36,11 +36,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	public long getChildId(int groupPosition, int childPosititon) {
 		return childPosititon;
 	}
-
+	
 	@Override
 	public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView,
 			ViewGroup parent) {
-
+		
 		final Comando comando = getChild(groupPosition, childPosition);
 
 		if (convertView == null) {
@@ -50,7 +50,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		}
 
 		TextView txtListChild = (TextView) convertView.findViewById(R.id.lblListItem);
-
+		
 		txtListChild.setText(comando.getAcao());
 		return convertView;
 	}

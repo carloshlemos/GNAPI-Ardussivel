@@ -27,7 +27,7 @@
             android:name="br.alfa.gnapi_ardussivel.MainActivity"	
             android:label="@string/app_name">
         </activity>
-
+        
         <activity-alias
             android:name="br.alfa.gnapi_ardussivel.MainActivity-Alias"
             android:label="@string/app_name"
@@ -38,6 +38,11 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity-alias>
+        
+        <activity
+            android:name="br.alfa.gnapi_ardussivel.NovoComandoActivity"	
+            android:label="@string/app_name">
+        </activity>
 
         <receiver
             android:name="br.alfa.gnapi_ardussivel.GoogleSearchReceiver"

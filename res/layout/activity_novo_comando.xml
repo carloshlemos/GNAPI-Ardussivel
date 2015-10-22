@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/lblAmbiente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ambiente:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtAmbiente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/lblUtensilio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Utensílio:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtUtensilio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/lblAcao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ação"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtAcao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/lblComandoVoz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comando de Voz:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtComandoVoz"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Entre com o comando de voz" />    
+    
+    <TextView
+        android:id="@+id/lblURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="URL:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/txtURL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.33"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+</LinearLayout>
