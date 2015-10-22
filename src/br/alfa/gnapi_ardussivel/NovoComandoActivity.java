@@ -1,10 +1,13 @@
 package br.alfa.gnapi_ardussivel;
 
+import java.util.List;
+
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -12,15 +15,22 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import br.alfa.gnapi_ardussivel.domain.Comando;
 
 public class NovoComandoActivity extends SherlockActivity {
 
 	private static final int REQUEST_CODE = 1234;
+	private Dialog matchTextDialog;
+	private TextView txtComandoVoz;
+	private List<String> matchesText;
+	private ListView textList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +63,30 @@ public class NovoComandoActivity extends SherlockActivity {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+
+			matchTextDialog = new Dialog(NovoComandoActivity.this);
+			matchTextDialog.setContentView(R.layout.dialog_matches_frag);
+			matchTextDialog.setTitle("Selecione o comando de voz");
+			textList = (ListView) matchTextDialog.findViewById(R.id.list);
+			matchesText = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+					matchesText);
+			textList.setAdapter(adapter);
+			textList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					((EditText) findViewById(R.id.txtComandoVoz)).setText(matchesText.get(position));
+					matchTextDialog.hide();
+				}
+			});
+			matchTextDialog.show();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override

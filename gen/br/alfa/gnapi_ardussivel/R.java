@@ -962,10 +962,11 @@ containing a value of this type.
         public static final int lblAcao=0x7f080038;
         public static final int lblAmbiente=0x7f080034;
         public static final int lblComandoVoz=0x7f08003a;
-        public static final int lblListHeader=0x7f08003e;
-        public static final int lblListItem=0x7f08003f;
+        public static final int lblListHeader=0x7f08003f;
+        public static final int lblListItem=0x7f080040;
         public static final int lblURL=0x7f08003c;
         public static final int lblUtensilio=0x7f080036;
+        public static final int list=0x7f08003e;
         public static final int listMode=0x7f080007;
         public static final int normal=0x7f080008;
         public static final int showCustom=0x7f08000c;
@@ -1008,10 +1009,11 @@ containing a value of this type.
         public static final int abs__simple_dropdown_hint=0x7f030014;
         public static final int activity_main=0x7f030015;
         public static final int activity_novo_comando=0x7f030016;
-        public static final int list_group=0x7f030017;
-        public static final int list_item=0x7f030018;
-        public static final int sherlock_spinner_dropdown_item=0x7f030019;
-        public static final int sherlock_spinner_item=0x7f03001a;
+        public static final int dialog_matches_frag=0x7f030017;
+        public static final int list_group=0x7f030018;
+        public static final int list_item=0x7f030019;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001a;
+        public static final int sherlock_spinner_item=0x7f03001b;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
