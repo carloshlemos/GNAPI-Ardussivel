@@ -53,7 +53,6 @@ public class MainActivity extends SherlockActivity {
 		try {
 			MainActivity.datasource = new ComandoDataSource(this);
 			MainActivity.datasource.open();
-			// listaComandos = MainActivity.datasource.listarTodos();
 
 			listaComandos = Comando.find(Comando.class, null, null, null, "UTENSILIO", null);
 
@@ -118,10 +117,9 @@ public class MainActivity extends SherlockActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		// First Menu Button
-		menu.add("Novo").setIcon(R.drawable.ic_add_white_24dp)
-		.setOnMenuItemClickListener(NovoButtonClickListener)
+		menu.add("Cadastro").setIcon(R.drawable.ic_add_white_24dp)
+				.setOnMenuItemClickListener(CadastroButtonClickListener)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 		// Third Menu Button
@@ -131,15 +129,16 @@ public class MainActivity extends SherlockActivity {
 
 		return super.onCreateOptionsMenu(menu);
 	}
-
-	OnMenuItemClickListener NovoButtonClickListener = new OnMenuItemClickListener() {
+	
+	OnMenuItemClickListener CadastroButtonClickListener = new OnMenuItemClickListener() {
 
 		public boolean onMenuItemClick(MenuItem item) {
-			Intent it = new Intent(MainActivity.this, NovoComandoActivity.class);
+			Intent it = new Intent(MainActivity.this, ListaComandoActivity.class);
 			startActivity(it);
 			return false;
 		}
 	};
+	
 
 	OnMenuItemClickListener ExitButtonClickListener = new OnMenuItemClickListener() {
 

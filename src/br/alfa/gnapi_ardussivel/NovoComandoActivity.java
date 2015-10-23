@@ -28,14 +28,29 @@ public class NovoComandoActivity extends SherlockActivity {
 
 	private static final int REQUEST_CODE = 1234;
 	private Dialog matchTextDialog;
-	private TextView txtComandoVoz;
 	private List<String> matchesText;
 	private ListView textList;
+	private Comando comando;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_novo_comando);
+		
+		comando = (Comando) getIntent().getSerializableExtra("comando");
+		
+		if (comando != null){
+			TextView txtAmbiente = (EditText) findViewById(R.id.txtAmbiente);
+			txtAmbiente.setText(comando.getAmbiente() != null ? comando.getAmbiente() : "");
+			TextView txtAcao = (EditText) findViewById(R.id.txtAcao);
+			txtAcao.setText(comando.getAcao() != null ? comando.getAcao() : "");
+			TextView txtUtensilio = (EditText) findViewById(R.id.txtUtensilio);
+			txtUtensilio.setText(comando.getUtensilio() != null ? comando.getUtensilio() : "");
+			TextView txtComando = (EditText) findViewById(R.id.txtComando);
+			txtComando.setText(comando.getComando() != null ? comando.getComando() : "");
+			TextView txtUrl = (EditText) findViewById(R.id.txtURL);
+			txtUrl.setText(comando.getUrl() != null ? comando.getUrl() : "");
+		}
 
 		EditText txtComandoVoz = (EditText) findViewById(R.id.txtComandoVoz);
 		txtComandoVoz.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -88,6 +103,10 @@ public class NovoComandoActivity extends SherlockActivity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+	
+	public Comando getComando() {
+		return comando;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -105,13 +124,18 @@ public class NovoComandoActivity extends SherlockActivity {
 	OnMenuItemClickListener SalvarButtonClickListener = new OnMenuItemClickListener() {
 
 		public boolean onMenuItemClick(MenuItem item) {
-
-			Comando comando = new Comando();
+			Comando comando = getComando();
+			
+			if (comando == null){
+				comando = new Comando();
+			}
+			
 			comando.setAmbiente(((EditText) findViewById(R.id.txtAmbiente)).getText().toString());
 			comando.setUtensilio(((EditText) findViewById(R.id.txtUtensilio)).getText().toString());
 			comando.setAcao(((EditText) findViewById(R.id.txtAcao)).getText().toString());
 			comando.setComando(((EditText) findViewById(R.id.txtComandoVoz)).getText().toString());
 			comando.setUrl(((EditText) findViewById(R.id.txtURL)).getText().toString());
+			
 			comando.save();
 
 			Toast.makeText(NovoComandoActivity.this, "Comando Salvo com Sucesso.", Toast.LENGTH_SHORT).show();

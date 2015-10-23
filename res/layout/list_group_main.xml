@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:paddingLeft="35sp"
-        android:textStyle="bold"
-        android:textColor="@color/cornisilk2" />
+        android:textStyle="bold" />
+<!--         android:textColor="@color/cornisilk2" /> -->
 
 </RelativeLayout>

@@ -1,9 +1,15 @@
 package br.alfa.gnapi_ardussivel.domain;
 
+import java.io.Serializable;
+
 import com.orm.SugarRecord;
 
-public class Comando extends SugarRecord<Comando> {
+public class Comando extends SugarRecord<Comando> implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String ambiente;
 	private String utensilio;
 	private String acao;

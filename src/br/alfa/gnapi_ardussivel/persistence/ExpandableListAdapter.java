@@ -4,9 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +12,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import br.alfa.gnapi_ardussivel.R;
 import br.alfa.gnapi_ardussivel.command.CommandAsyncTask;
 import br.alfa.gnapi_ardussivel.domain.Comando;
@@ -54,7 +52,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = infalInflater.inflate(R.layout.list_item, null);
+			convertView = infalInflater.inflate(R.layout.list_item_main, null);
 		}
 
 		Button btnAcao = (Button) convertView.findViewById(R.id.btnAcao);
@@ -62,31 +60,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		btnAcao.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				Toast.makeText(context, "Comando enviado.", Toast.LENGTH_SHORT).show();
 				new CommandAsyncTask(context).execute(comando.getUrl());
-			}
-		});
-		
-		ImageButton btnExcluir = (ImageButton) convertView.findViewById(R.id.btnExcluir);
-
-		btnExcluir.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				builder.setMessage("Excluir registro selecionado?");
-				builder.setCancelable(false);
-				builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						comando.delete();
-						notifyDataSetChanged();
-					}
-				});
-				builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-				AlertDialog alertDialog = builder.create();
-				alertDialog.show();
 			}
 		});
 		
@@ -119,7 +94,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		if (convertView == null) {
 			LayoutInflater infalInflater = (LayoutInflater) this.context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = infalInflater.inflate(R.layout.list_group, null);
+			convertView = infalInflater.inflate(R.layout.list_group_main, null);
 		}
 
 		TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);

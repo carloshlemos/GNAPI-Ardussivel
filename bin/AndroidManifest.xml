@@ -44,6 +44,11 @@
             android:name="br.alfa.gnapi_ardussivel.NovoComandoActivity"	
             android:label="@string/app_name">
         </activity>
+        
+        <activity
+            android:name="br.alfa.gnapi_ardussivel.ListaComandoActivity"	
+            android:label="@string/app_name">
+        </activity>
 
         <receiver
             android:name="br.alfa.gnapi_ardussivel.GoogleSearchReceiver"
