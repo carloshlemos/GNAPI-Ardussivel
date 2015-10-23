@@ -686,10 +686,11 @@ containing a value of this type.
         public static final int abs__bright_foreground_disabled_holo_light=0x7f050005;
         public static final int abs__bright_foreground_holo_dark=0x7f050002;
         public static final int abs__bright_foreground_holo_light=0x7f050003;
-        public static final int abs__primary_text_disable_only_holo_dark=0x7f050008;
-        public static final int abs__primary_text_disable_only_holo_light=0x7f050009;
-        public static final int abs__primary_text_holo_dark=0x7f05000a;
-        public static final int abs__primary_text_holo_light=0x7f05000b;
+        public static final int abs__primary_text_disable_only_holo_dark=0x7f050009;
+        public static final int abs__primary_text_disable_only_holo_light=0x7f05000a;
+        public static final int abs__primary_text_holo_dark=0x7f05000b;
+        public static final int abs__primary_text_holo_light=0x7f05000c;
+        public static final int cornisilk2=0x7f050008;
         public static final int opaque_red=0x7f050006;
         public static final int translucent_red=0x7f050007;
     }
@@ -913,7 +914,17 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
-        public static final int ic_launcher=0x7f020070;
+        public static final int ic_action=0x7f020070;
+        public static final int ic_add_white_24dp=0x7f020071;
+        public static final int ic_create_white_24dp=0x7f020072;
+        public static final int ic_delete=0x7f020073;
+        public static final int ic_done_white_24dp=0x7f020074;
+        public static final int ic_highlight_off_white_24dp=0x7f020075;
+        public static final int ic_home_white_24dp=0x7f020076;
+        public static final int ic_launcher=0x7f020077;
+        public static final int ic_mic_white_24dp=0x7f020078;
+        public static final int ic_replay_white_24dp=0x7f020079;
+        public static final int ic_settings_voice_white_24dp=0x7f02007a;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f080020;
@@ -955,6 +966,8 @@ containing a value of this type.
         public static final int abs__textButton=0x7f080013;
         public static final int abs__title=0x7f08001b;
         public static final int abs__up=0x7f080001;
+        public static final int btnAcao=0x7f080040;
+        public static final int btnExcluir=0x7f080041;
         public static final int disableHome=0x7f08000a;
         public static final int edit_query=0x7f080026;
         public static final int expandViewComandos=0x7f080033;
@@ -963,7 +976,6 @@ containing a value of this type.
         public static final int lblAmbiente=0x7f080034;
         public static final int lblComandoVoz=0x7f08003a;
         public static final int lblListHeader=0x7f08003f;
-        public static final int lblListItem=0x7f080040;
         public static final int lblURL=0x7f08003c;
         public static final int lblUtensilio=0x7f080036;
         public static final int list=0x7f08003e;

@@ -11,6 +11,6 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:paddingLeft="35sp"
         android:textStyle="bold"
-        android:textColor="@color/translucent_red" />
+        android:textColor="@color/cornisilk2" />
 
 </RelativeLayout>

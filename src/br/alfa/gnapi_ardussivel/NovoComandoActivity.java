@@ -91,10 +91,12 @@ public class NovoComandoActivity extends SherlockActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add("Salvar").setOnMenuItemClickListener(SalvarButtonClickListener)
+		menu.add("").setIcon(R.drawable.ic_done_white_24dp)
+		.setOnMenuItemClickListener(SalvarButtonClickListener)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-		menu.add("Cancelar").setOnMenuItemClickListener(CancelarButtonClickListener)
+		menu.add("").setIcon(R.drawable.ic_replay_white_24dp)
+		.setOnMenuItemClickListener(CancelarButtonClickListener)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 		return super.onCreateOptionsMenu(menu);

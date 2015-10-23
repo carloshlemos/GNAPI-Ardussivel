@@ -55,7 +55,7 @@ public class MainActivity extends SherlockActivity {
 			MainActivity.datasource.open();
 			// listaComandos = MainActivity.datasource.listarTodos();
 
-			listaComandos = Comando.listAll(Comando.class);
+			listaComandos = Comando.find(Comando.class, null, null, null, "UTENSILIO", null);
 
 			expandViewComandos = (ExpandableListView) findViewById(R.id.expandViewComandos);
 
@@ -67,7 +67,7 @@ public class MainActivity extends SherlockActivity {
 
 					Comando comando = listDataChild.get(new ArrayList<String>(listDataHeader).get(groupPosition))
 							.get(childPosition);
-
+					
 					new CommandAsyncTask(getApplicationContext()).execute(comando.getUrl());
 
 					Toast.makeText(getApplicationContext(),
@@ -79,7 +79,7 @@ public class MainActivity extends SherlockActivity {
 			});
 
 			prepareListData();
-			listAdapter = new ExpandableListAdapter(getApplicationContext(), new ArrayList<String>(listDataHeader),
+			listAdapter = new ExpandableListAdapter(this, new ArrayList<String>(listDataHeader),
 					listDataChild);
 			expandViewComandos.setAdapter(listAdapter);
 		} catch (SQLException e) {
@@ -120,15 +120,13 @@ public class MainActivity extends SherlockActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// First Menu Button
-		menu.add("Novo").setOnMenuItemClickListener(NovoButtonClickListener)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
-		// Second Menu Button
-		menu.add("Excluir").setOnMenuItemClickListener(ExcluirButtonClickListener)
+		menu.add("Novo").setIcon(R.drawable.ic_add_white_24dp)
+		.setOnMenuItemClickListener(NovoButtonClickListener)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 		// Third Menu Button
-		menu.add("Sair").setOnMenuItemClickListener(ExitButtonClickListener)
+		menu.add("Sair").setIcon(R.drawable.ic_home_white_24dp)
+				.setOnMenuItemClickListener(ExitButtonClickListener)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
 		return super.onCreateOptionsMenu(menu);
@@ -139,14 +137,6 @@ public class MainActivity extends SherlockActivity {
 		public boolean onMenuItemClick(MenuItem item) {
 			Intent it = new Intent(MainActivity.this, NovoComandoActivity.class);
 			startActivity(it);
-			return false;
-		}
-	};
-
-	OnMenuItemClickListener ExcluirButtonClickListener = new OnMenuItemClickListener() {
-
-		public boolean onMenuItemClick(MenuItem item) {
-			Toast.makeText(MainActivity.this, "Excluir Comando", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 	};
