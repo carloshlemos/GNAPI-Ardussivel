@@ -52,14 +52,20 @@ public class ListaComandoActivity extends SherlockActivity {
 					Comando comando = (Comando) parent.getItemAtPosition(position);
 					
 					Intent it = new Intent(ListaComandoActivity.this, NovoComandoActivity.class);
-					it.putExtra("comando", comando);
-					startActivity(it);
+					it.putExtra("idComando", comando.getId());
+					startActivityForResult(it, RESULT_OK);
 				}
 			});
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		montaListaComandos();
 	}
 
 	@Override
@@ -77,7 +83,7 @@ public class ListaComandoActivity extends SherlockActivity {
 
 		public boolean onMenuItemClick(MenuItem item) {
 			Intent it = new Intent(ListaComandoActivity.this, NovoComandoActivity.class);
-			startActivity(it);
+			startActivityForResult(it, RESULT_OK);
 			return false;
 		}
 	};

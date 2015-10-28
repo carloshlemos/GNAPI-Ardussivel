@@ -134,9 +134,14 @@ public class MainActivity extends SherlockActivity {
 
 		public boolean onMenuItemClick(MenuItem item) {
 			Intent it = new Intent(MainActivity.this, ListaComandoActivity.class);
-			startActivity(it);
+			startActivityForResult(it, RESULT_OK);
 			return false;
 		}
+	};
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		prepareListData();
 	};
 	
 
