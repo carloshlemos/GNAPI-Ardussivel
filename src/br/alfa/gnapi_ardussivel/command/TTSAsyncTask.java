@@ -12,16 +12,11 @@ public class TTSAsyncTask extends AsyncTask<String, Integer, String> {
 
 	public TTSAsyncTask(Context context) {
 		this.context = context;
-		this.tts = new TTSManager();
-		this.tts.init(context);
 	}
 
 	@Override
 	protected String doInBackground(String... params) {
-		
-		for (String param : params) {
-			this.tts.addQueue(param);			
-		}
+		this.tts.initQueue(params.toString());
 		
 		return "Comando Executado!!";
 	}
@@ -30,5 +25,15 @@ public class TTSAsyncTask extends AsyncTask<String, Integer, String> {
 	protected void onPostExecute(String result) {
 		Toast.makeText(context, "Resultado: " + result, Toast.LENGTH_LONG).show();		
 	}
+
+	public TTSManager getTts() {
+		return tts;
+	}
+
+	public void setTts(TTSManager tts) {
+		this.tts = tts;
+	}
+	
+	
 
 }

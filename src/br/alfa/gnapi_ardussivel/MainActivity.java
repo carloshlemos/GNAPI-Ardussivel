@@ -23,10 +23,12 @@ import br.alfa.gnapi_ardussivel.command.CommandAsyncTask;
 import br.alfa.gnapi_ardussivel.domain.Comando;
 import br.alfa.gnapi_ardussivel.persistence.ComandoDataSource;
 import br.alfa.gnapi_ardussivel.persistence.ExpandableListAdapter;
+import br.alfa.gnapi_ardussivel.util.TTSManager;
 
 public class MainActivity extends SherlockActivity {
 
 	private static ComandoDataSource datasource;
+	private static TTSManager tts;
 	private List<Comando> listaComandos;
 
 	private ExpandableListAdapter listAdapter;
@@ -38,11 +40,18 @@ public class MainActivity extends SherlockActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		MainActivity.tts = new TTSManager();
+		MainActivity.tts.init(this);
+
 		montaListaComandos();
 	}
 
 	public static ComandoDataSource getDatasource() {
 		return MainActivity.datasource;
+	}
+
+	public static TTSManager getTts() {
+		return tts;
 	}
 
 	public List<Comando> getListaComandos() {
@@ -53,7 +62,7 @@ public class MainActivity extends SherlockActivity {
 		try {
 			MainActivity.datasource = new ComandoDataSource(this);
 			MainActivity.datasource.open();
-
+			
 			listaComandos = Comando.find(Comando.class, null, null, null, "UTENSILIO", null);
 
 			expandViewComandos = (ExpandableListView) findViewById(R.id.expandViewComandos);
@@ -66,7 +75,7 @@ public class MainActivity extends SherlockActivity {
 
 					Comando comando = listDataChild.get(new ArrayList<String>(listDataHeader).get(groupPosition))
 							.get(childPosition);
-					
+
 					new CommandAsyncTask(getApplicationContext()).execute(comando.getUrl());
 
 					Toast.makeText(getApplicationContext(),
@@ -78,8 +87,7 @@ public class MainActivity extends SherlockActivity {
 			});
 
 			prepareListData();
-			listAdapter = new ExpandableListAdapter(this, new ArrayList<String>(listDataHeader),
-					listDataChild);
+			listAdapter = new ExpandableListAdapter(this, new ArrayList<String>(listDataHeader), listDataChild);
 			expandViewComandos.setAdapter(listAdapter);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -122,14 +130,9 @@ public class MainActivity extends SherlockActivity {
 				.setOnMenuItemClickListener(CadastroButtonClickListener)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 
-		// Third Menu Button
-		menu.add("Sair").setIcon(R.drawable.ic_home_white_24dp)
-				.setOnMenuItemClickListener(ExitButtonClickListener)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	OnMenuItemClickListener CadastroButtonClickListener = new OnMenuItemClickListener() {
 
 		public boolean onMenuItemClick(MenuItem item) {
@@ -138,22 +141,19 @@ public class MainActivity extends SherlockActivity {
 			return false;
 		}
 	};
-	
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		prepareListData();
 	};
-	
 
-	OnMenuItemClickListener ExitButtonClickListener = new OnMenuItemClickListener() {
-
-		public boolean onMenuItemClick(MenuItem item) {
-			// Create a simple toast message
-			Toast.makeText(MainActivity.this, "Botão Sair", Toast.LENGTH_SHORT).show();
-
-			// Do something else
-			return false;
-		}
-	};
+	/**
+     * Releases the resources used by the TextToSpeech engine.
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MainActivity.tts.shutDown();
+    }
 
 }

@@ -18,6 +18,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+import br.alfa.gnapi_ardussivel.MainActivity;
 
 public class CommandAsyncTask extends AsyncTask<String, Integer, String> {
 
@@ -48,9 +49,9 @@ public class CommandAsyncTask extends AsyncTask<String, Integer, String> {
 				resposta = EntityUtils.toString(response.getEntity());
 				Log.v("MyAsyncTask", resposta);
 			} catch (ClientProtocolException e) {
-				Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+				return "Ocorreu um erro ao enviar comando ao servidor";
 			} catch (IOException e) {
-				Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+				return "Ocorreu um erro ao enviar comando ao servidor";
 			}
 		}
 		return resposta;
@@ -58,7 +59,7 @@ public class CommandAsyncTask extends AsyncTask<String, Integer, String> {
 
 	@Override
 	protected void onPostExecute(String result) {
+		MainActivity.getTts().initQueue(result);
 		Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-		// new TTSAsyncTask(context).execute(result);
 	}
 }
