@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.SQLException;
 import android.util.Log;
+import android.widget.Toast;
 import br.alfa.gnapi_ardussivel.command.CommandAsyncTask;
 import br.alfa.gnapi_ardussivel.domain.Comando;
 import br.alfa.gnapi_ardussivel.persistence.ComandoDataSource;
@@ -52,18 +53,16 @@ public class GoogleSearchReceiver extends BroadcastReceiver {
 						Comando comando = this.mapComandos.get(queryText);
 
 						if (comando != null) {
+							MainActivity.getTts().initQueue("Enviando Comando.");
 							new CommandAsyncTask(context).execute(comando.getUrl());
-							// GoogleNowUtil.resetGoogleNow(context);
-						} else {
-							// GoogleNowUtil.resetGoogleNow(context);
-						}
-					}
+						}					}
 				}else {
 					Log.w(GoogleSearchReceiver.class.getName(),
 							"################### COMANDOS GNAPI - SEM CONEXÃO ##################");
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				MainActivity.getTts().initQueue("Erro ao consultar comando");
+				Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
 			}
 		}
 	}

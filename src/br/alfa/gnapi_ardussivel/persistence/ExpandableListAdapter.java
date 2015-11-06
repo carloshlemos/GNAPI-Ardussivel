@@ -14,6 +14,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import br.alfa.gnapi_ardussivel.MainActivity;
 import br.alfa.gnapi_ardussivel.R;
 import br.alfa.gnapi_ardussivel.command.CommandAsyncTask;
 import br.alfa.gnapi_ardussivel.domain.Comando;
@@ -60,7 +61,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 		btnAcao.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Toast.makeText(context, "Comando enviado.", Toast.LENGTH_SHORT).show();
+				MainActivity.getTts().initQueue("Enviando Comando.");
+				Toast.makeText(context, "Enviando Comando.", Toast.LENGTH_SHORT).show();
 				new CommandAsyncTask(context).execute(comando.getUrl());
 			}
 		});
