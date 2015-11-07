@@ -46,7 +46,18 @@ public class CommandAsyncTask extends AsyncTask<String, Integer, String> {
 				// Execute HTTP Post Request
 				httpPost.setHeader("Content-type", "application/json");
 				HttpResponse response = httpclient.execute(httpPost);
-				resposta = EntityUtils.toString(response.getEntity());
+				
+				switch (response.getStatusLine().getStatusCode()) {
+				case 200:
+					resposta = EntityUtils.toString(response.getEntity());
+					break;
+				case 404:
+					resposta = "Servidor não encontrado, status 404.";
+					break;
+				case 500:
+					resposta = "Erro interno no servidor, status 500.";
+					break;
+				}
 				Log.v("MyAsyncTask", resposta);
 			} catch (ClientProtocolException e) {
 				return "Ocorreu um erro ao enviar comando ao servidor";
